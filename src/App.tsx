@@ -1,53 +1,36 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
+import { useRef } from "react";
+import ReactPlayer from "react-player";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+// kraska was here owo :3
+export function App() {
+    return <>
+        <header>
+            <nav>
+                <ul>
+                    <li>Релизы</li>
+                    <li>Каталог</li>
+                    <li>Избранное</li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <ul>
+                <li>реиз крупным планом</li>
+            </ul>
+            <ul>
+                <li>список недавних</li>
+                <li>список ожидаемых сегодня</li>
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
-  return (
-    <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-
-      <p>{greetMsg}</p>
-    </div>
-  );
+            </ul>
+            <ReactPlayer autoPlay={false} controls url="https://cache.libria.fun/videos/media/ts/9604/1/720/71e1676f903cfb3cfe61fd0792d57171.m3u8" />
+            {/* <ReactHlsPlayer
+                src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
+                autoPlay={false}
+                controls={true}
+                width="100%"
+                height="auto"
+                playerRef={stupidRef}
+            /> */}
+        </main>
+    </>
 }
-
-export default App;
