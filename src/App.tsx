@@ -1,8 +1,14 @@
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import { getRandomTitle } from "./api";
 
 // kraska was here owo :3
 export function App() {
+    const [title, setTitle] = useState()
+	useEffect(() => {
+		getRandomTitle().then(setTitle)
+	}, [])
+
     return <>
         <header>
             <nav>
@@ -22,7 +28,7 @@ export function App() {
                 <li>список ожидаемых сегодня</li>
 
             </ul>
-            <ReactPlayer autoPlay={false} controls url="https://cache.libria.fun/videos/media/ts/9604/1/720/71e1676f903cfb3cfe61fd0792d57171.m3u8" />
+            <ReactPlayer autoPlay={false} controls url={title} />
             {/* <ReactHlsPlayer
                 src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
                 autoPlay={false}
