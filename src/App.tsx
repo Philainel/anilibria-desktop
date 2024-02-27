@@ -2,17 +2,14 @@ import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { getRandomTitle } from "./api/getRandomTitle";
 import { getTitleHLS } from "./api";
+import { TitleT } from "./api/anilibria-types";
+import { VideoPlayer } from "./components/VideoPlayer";
 
 // kraska was here owo :3
 export function App() {
-    const [title, setTitle] = useState<string>()
+    const [title, setTitle] = useState<TitleT>()
 	useEffect(() => {
-		getRandomTitle().then((title) => {
-            console.log(title)
-            console.log(title.player.list[0].hls.hd)
-            console.log(getTitleHLS(title, title.player.list[0], "hd"))
-            setTitle(getTitleHLS(title, title.player.list[0], "hd"))
-        })
+		getRandomTitle().then((title) => setTitle(title))
 	}, [])
 
     return <>
@@ -34,7 +31,7 @@ export function App() {
                 <li>список ожидаемых сегодня</li>
 
             </ul>
-            <ReactPlayer autoPlay={false} controls url={title} />
+            {title && <VideoPlayer title={title} />}
         </main>
     </>
 }
