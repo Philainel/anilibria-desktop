@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { getRandomTitle } from "./api";
+import { getRandomTitle } from "./api/getRandomTitle";
+import { getTitleHLS } from "./api";
 
 // kraska was here owo :3
 export function App() {
-    const [title, setTitle] = useState()
+    const [title, setTitle] = useState<string>()
 	useEffect(() => {
-		getRandomTitle().then(setTitle)
+		getRandomTitle().then((title) => {
+            console.log(title)
+            console.log(title.player.list[0].hls.hd)
+            console.log(getTitleHLS(title, title.player.list[0], "hd"))
+            setTitle(getTitleHLS(title, title.player.list[0], "hd"))
+        })
 	}, [])
 
     return <>
@@ -29,14 +35,6 @@ export function App() {
 
             </ul>
             <ReactPlayer autoPlay={false} controls url={title} />
-            {/* <ReactHlsPlayer
-                src="https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8"
-                autoPlay={false}
-                controls={true}
-                width="100%"
-                height="auto"
-                playerRef={stupidRef}
-            /> */}
         </main>
     </>
 }

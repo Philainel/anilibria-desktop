@@ -1,13 +1,13 @@
 
 import { Axios } from "axios"
+import { TitleT } from "./anilibria-types"
+import { playerListT } from "./anilibria-types/TitleT"
 
-const axios = new Axios({
+// TODO: pluggable http middleware - like Rust reqwests or like axios here
+export const anilibriaAxios = new Axios({
     baseURL: "https://api.anilibria.tv/v3/"
 })
 
-export async function getRandomTitle() {
-    const response = JSON.parse((await axios.get("/title/random")).data)
-    const link = `https://${response.player.host}/${response.player.list["1"].hls.hd}`
-    console.log(link)
-    return link
+export function getTitleHLS(title: TitleT, episode: playerListT, quality: "fhd" | "hd" | "sd") {
+    return `https://${title.player.host}${episode.hls[quality]}`
 }
