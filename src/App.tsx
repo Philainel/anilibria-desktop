@@ -10,7 +10,7 @@ import { getTitle } from "./api/getTitle";
 export function App() {
     const [title, setTitle] = useState<TitleT>()
 	useEffect(() => {
-		getRandomTitle(/* {code: 'tensei-shitara-slime-datta-ken'} */).then((title) => {console.log(title); setTitle(title)})
+		getTitle({code: 'tensei-shitara-slime-datta-ken'}).then((title) => {console.log(title); setTitle(title)})
 	}, [])
 
     return <>
