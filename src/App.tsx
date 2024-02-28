@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
-import { getRandomTitle } from "./api/getRandomTitle";
-import { getTitleHLS } from "./api";
-import { TitleT } from "./api/anilibria-types";
+import { TitleT } from "./api/v3/anilibria-types";
 import { VideoPlayer } from "./components/VideoPlayer";
-import { getTitle } from "./api/getTitle";
+import { getTitle } from "./api/v3/getTitle";
 
 // kraska was here owo :3
 export function App() {
