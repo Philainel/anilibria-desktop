@@ -4,7 +4,7 @@ import { TitleT } from "./anilibria-types"
 import { playerListT } from "./anilibria-types/TitleT"
 
 // TODO: pluggable http middleware - like Rust reqwests or like axios here
-export const anilibriaAxios = new Axios({
+export const anilibriaV3Axios = new Axios({
     baseURL: "https://api.anilibria.tv/v3/"
 })
 
