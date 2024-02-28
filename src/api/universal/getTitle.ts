@@ -26,7 +26,7 @@ export async function getTitle(
                 episodes: {
                     string: v1.data.series
                 },
-                list: [...v1.data.playlist!.map((p, i): RecursivePartial<playerListT> => ({ episode: i + 1, hls: { fhd: p.fullhd, hd: p.hd, sd: p.sd }, name: p.title }))]
+                list: v1.data.playlist!.map((p, i): RecursivePartial<playerListT> => ({ episode: i + 1, hls: { fhd: p.fullhd, hd: p.hd, sd: p.sd }, name: p.title }))
             }
         }
     }
