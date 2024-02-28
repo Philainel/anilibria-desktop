@@ -1,7 +1,7 @@
 import ReactPlayer from "react-player";
 import { getTitleHLS } from "../api/v3";
 import { TitleT } from "../api/v3/anilibria-types";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Slider from '@radix-ui/react-slider';
 
 export function VideoPlayer({ title }: { title: TitleT }) {
@@ -14,14 +14,19 @@ export function VideoPlayer({ title }: { title: TitleT }) {
         playerRef.current?.seekTo(progress, "fraction")
         setProgress(progress)
     }
-    const isFullscreen = () => document.fullscreenElement != null
+    const [isFullscreen, setFullscreen] = useState(false)
     const toggleFullscreen = () => {
-        if(isFullscreen()) {
+        if(isFullscreen) {
             document.exitFullscreen()
+            setFullscreen(false)
         } else {
             containerRef.current?.requestFullscreen()
+            setFullscreen(true)
         }
     }
+    useEffect(() => {
+        setFullscreen(document.fullscreenElement != null)
+    }, [])
     return <div className="relative w-fit bg-black" ref={containerRef}>
         <ReactPlayer ref={playerRef} width={"100%"} height={"100%"} autoPlay={false} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({played}) => setProgress(played)}/>
         <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col ">
@@ -50,7 +55,7 @@ export function VideoPlayer({ title }: { title: TitleT }) {
                         <span className="material-symbols-outlined">skip_next</span>
                     </button>
                     <button className={`ml-auto w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => toggleFullscreen()} disabled={episode >= title.player.list.length - 1} >
-                        <span className="material-symbols-outlined">{isFullscreen() ? 'fullscreen_exit' : 'fullscreen'}</span>
+                        <span className="material-symbols-outlined">{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</span>
                     </button>
                 </div>
             </div>
