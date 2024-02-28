@@ -1,21 +1,33 @@
 import { TitleT } from "../v3/anilibria-types";
 import { GetTitleOptions, getTitle as getTitleV3 } from "../v3/getTitle";
 import getTitleV1 from '../v1/getTitle'
+import { RecursivePartial } from "../../util";
+import { anilibriaV1Axios, hosts } from "../v1";
+import { playerListT } from "../v3/anilibria-types/TitleT";
+/**
+ * get title by id or code
+ * @param options request options
+ * @returns title information - if v3 is resolved it is full, and if v1 is resolved only really neccessary information is includedd
+ */
 export async function getTitle(
-    // Options don't use anilibria type here because their request type kinda sucks?
     options: GetTitleOptions
-): Promise<TitleT> {
+): Promise<RecursivePartial<TitleT>> {
     try {
         const v3 = getTitleV3(options)
         return v3
-    } catch(e) {
-        const v1 = await getTitleV1({code: options.code, id: options.id, filter: options.filter, rm: options.remove})
+    } catch (e) {
+        // insert kurt angle meme
+        const v1 = await getTitleV1({ code: options.code, id: options.id, filter: options.filter, rm: options.remove })
         return {
             code: v1.data.code!,
             id: v1.data.id!,
-            description: {html: v1.data.description!, plain: v1.data.description!, no_view_order: v1.data.description!},
-
-            blocked: {blocked: v1.data.blockedInfo?.blocked ?? false, bakanim: v1.data.blockedInfo?.blocked ?? false}
+            player: {
+                host: hosts[0],
+                episodes: {
+                    string: v1.data.series
+                },
+                list: [...v1.data.playlist!.map((p, i): RecursivePartial<playerListT> => ({ episode: i + 1, hls: { fhd: p.fullhd, hd: p.hd, sd: p.sd }, name: p.title }))]
+            }
         }
     }
 }
