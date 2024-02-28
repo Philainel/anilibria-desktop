@@ -32,7 +32,7 @@ export function VideoPlayer({ title }: { title: TitleT }) {
             <div className="flex-grow-[1]" onClick={() => setPlaying(!isPlaying)}>{/* Pause Icon and stuff! */}</div>
             <div className="bg-gradient-to-b from-transparent to-black text-white flex flex-col items-center h-fit justify-end">
                 <div className="px-2 w-full">
-                    <Slider.Root className="h-3 px-2 w-full rounded-full relative flex items-center group" max={1000} value={[progress * 1000]} onValueChange={value => seek(value[0] / 1000)}>
+                    <Slider.Root className="h-3 px-2 w-full rounded-full relative flex items-center group cursor-pointer" max={1000} value={[progress * 1000]} onValueChange={value => seek(value[0] / 1000)}>
                         <Slider.Track className="h-1 w-full rounded-full bg-gray-500 relative">
                             <Slider.Range className="h-full rounded-full bg-white absolute" />
                         </Slider.Track>
