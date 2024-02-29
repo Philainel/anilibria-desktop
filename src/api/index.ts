@@ -16,8 +16,8 @@ export async function ripplingRequest<T, D, R>(c: AxiosRequestConfig<T>): Promis
     for (const mirror of mirrors) {
         try {
             const response = await anilibriaAxios.request({ ...c, baseURL: mirror })
-            console.log("response:")
-            console.log(response)
+            // console.log("response:")
+            // console.log(response)
             return response
         } catch(e) {
             console.error(`Something went wrong while requesting mirror ${mirror}:`)
