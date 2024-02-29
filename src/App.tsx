@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { TitleT } from "./api/v3/anilibria-types";
+import { TitleT } from "./api/anilibria-types";
 import { VideoPlayer } from "./components/VideoPlayer";
-import { getTitle } from "./api/v3/getTitle";
+import { getTitle } from "./api/getTitle";
 
 // kraska was here owo :3
 export function App() {

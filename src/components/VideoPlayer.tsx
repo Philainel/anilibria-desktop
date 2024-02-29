@@ -1,6 +1,6 @@
 import ReactPlayer from "react-player";
-import { getTitleHLS } from "../api/v3";
-import { TitleT } from "../api/v3/anilibria-types";
+import { getTitleHLS } from "../api";
+import { TitleT } from "../api/anilibria-types";
 import { useEffect, useRef, useState } from "react";
 import * as Slider from '@radix-ui/react-slider';
 
