@@ -1,4 +1,4 @@
-import { anilibriaAxios } from ".";
+import { anilibriaAxios, ripplingRequest } from ".";
 import { TitleT } from "./anilibria-types";
 
 export async function getTitle(
@@ -12,6 +12,7 @@ export async function getTitle(
     }
 ): Promise<TitleT> {
     (options as any).playlist_type = "array"
-    console.log("/title?"+new URLSearchParams(options as any).toString())
-    return JSON.parse((await anilibriaAxios.get("/title?"+new URLSearchParams(options as any).toString())).data);
+    console.log("/title?" + new URLSearchParams(options as any).toString())
+    ripplingRequest({url: "/title?" + new URLSearchParams(options as any).toString()})
+    return JSON.parse((await ripplingRequest({url: "/title?" + new URLSearchParams(options as any).toString()})).data as string);
 }
