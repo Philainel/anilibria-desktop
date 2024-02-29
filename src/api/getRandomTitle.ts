@@ -1,4 +1,4 @@
-import { anilibriaAxios, ripplingRequest } from ".";
+import { ripplingRequest } from ".";
 import { TitleT } from "./anilibria-types";
 
 
