@@ -1,4 +1,4 @@
-import { anilibriaAxios, ripplingRequest } from ".";
+import { ripplingRequest } from ".";
 import { TitleRequestOptionsT, TitleT } from "./anilibria-types";
 
 export async function getTitle(
