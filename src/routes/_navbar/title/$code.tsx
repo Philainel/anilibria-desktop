@@ -1,9 +1,10 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import getTitle from '../../../api/getTitle'
 import { MDIcon } from '../../../components/MDIcon'
+import { TitleT } from '../../../api/anilibria-types'
 
 export function TitleInformation({Route}: {Route: any}) {
-    const title = Route.useLoaderData()
+    const title: TitleT = Route.useLoaderData()
     return <main className='p-4 flex gap-4'>
         <img src={"https://anilibria.tv" + title.posters.original.url} alt={`Постер для "${title.names.ru}"`} className="rounded-3xl h-[16rem]" />
         <div>
