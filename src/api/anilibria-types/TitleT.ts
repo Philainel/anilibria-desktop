@@ -21,7 +21,7 @@ export type TitleT = {
   season: seasonT;
   year: number;
   week_day: number;
-  description: description_typeT;
+  description: string;
   blocked: blockedT;
   player: playerT;
   torrents: torrentsT;
