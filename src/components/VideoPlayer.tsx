@@ -32,7 +32,7 @@ export function VideoPlayer({ title, className, backArrow: enableBackArrow }: { 
     return <div className={className || "w-fit"} ref={containerRef}>
         <div className="relative bg-black w-[inherit] h-[inherit]"> {/* black bg for better vis */}
             <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={false} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({ played }) => setProgress(played)} />
-            <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col ">
+            <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col opacity-0 transition-all delay-[1s] duration-200 hover:opacity-100 hover:delay-0">
                 {/* overlay itself */}
                 <div className="bg-gradient-to-b from-black to-transparent text-white p-4 h-16 group flex gap-1 items-center">
                     {enableBackArrow && <button className={`w-0 group-hover:w-8 opacity-0 group-hover:opacity-100 h-8 flex items-center justify-center transition-all`} onClick={() => history.back()}>
