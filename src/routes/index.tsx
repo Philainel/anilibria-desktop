@@ -1,15 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from "react";
 import { TitleT } from "../api/anilibria-types";
 import { getTitle } from "../api/getTitle";
 
 // kraska was here owo :3
 export function App() {
-    const [title, setTitle] = useState<TitleT>()
-    useEffect(() => {
-        getTitle({ code: 'tensei-shitara-slime-datta-ken' }).then((title) => { console.log(title); setTitle(title) })
-    }, [])
-
     return <>
         <header>
             <nav>
@@ -27,8 +22,8 @@ export function App() {
             <ul>
                 <li>список недавних</li>
                 <li>список ожидаемых сегодня</li>
-
             </ul>
+            <Link to='/tensura'>Tensura debug</Link>
         </main>
     </>
 }
