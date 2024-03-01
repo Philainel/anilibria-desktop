@@ -5,4 +5,5 @@ import { TitleSearchRequestOptionsT, TitlesDataT } from "./anilibria-types";
 //     return (JSON.parse((await ripplingRequest({url: "/title/search?" + new URLSearchParams(options as any).toString()})).data as string))
 // }
 
-const search = generateAPI<TitleSearchRequestOptionsT, TitlesDataT>("/title/search", { playlist_type: "array" })
+export const search = generateAPI<TitleSearchRequestOptionsT, TitlesDataT>("/title/search", { playlist_type: "array" })
+export default search

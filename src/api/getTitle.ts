@@ -10,3 +10,4 @@ import { TitleRequestOptionsT, TitleT } from "./anilibria-types";
 // }
 
 export const getTitle = generateAPI<TitleRequestOptionsT, TitleT>("/title", { playlist_type: "array" })
+export default getTitle

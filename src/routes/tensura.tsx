@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { VideoPlayer } from "../components/VideoPlayer";
-import { useEffect, useState } from "react";
-import { getTitle } from "../api/getTitle";
+import { createFileRoute } from '@tanstack/react-router'
 import { TitleT } from "../api/anilibria-types";
+import { useEffect, useState } from 'react';
+import getTitle from '../api/getTitle';
+import { VideoPlayer } from '../components/VideoPlayer';
 
 function Tensura() {
     const [title, setTitle] = useState<TitleT>()

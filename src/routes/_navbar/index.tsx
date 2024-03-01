@@ -1,23 +1,12 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from "react";
-import { TitleT } from "../api/anilibria-types";
-import { getTitle } from "../api/getTitle";
-import { MDIcon } from '../components/MDIcon';
+import { TitleT } from "../../api/anilibria-types";
+import { getTitle } from "../../api/getTitle";
+import { MDIcon } from '../../components/MDIcon';
 
 // kraska was here owo :3
 export function App() {
     return <>
-        <header>
-            <nav className='flex gap-4 p-4 items-center'>
-                <img src="https://placehold.co/128x128.png" width={32} className='rounded-full' />
-                <a className='bg-brand-light text-brand-dark px-4 py-2 rounded-md'>Релизы</a>
-                <a className='bg-brand-primary text-brand-light px-4 py-2 rounded-md'>Каталог</a>
-                <a className='bg-brand-primary text-brand-light px-4 py-2 rounded-md'>Избранное</a>
-                <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer ml-auto'><MDIcon>settings</MDIcon></a>
-                <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><MDIcon>notifications</MDIcon></a>
-                <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><img src="https://placehold.co/128x128.png" width={32} className='rounded-full' /></a>
-            </nav>
-        </header>
         <main className='p-4 flex flex-col gap-4'>
             <section className='flex gap-4'>
                 <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
@@ -55,11 +44,11 @@ export function App() {
                     <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
                 </div>
             </section>
-            <Link to='/player/$code' params={{ code: "tensei-shitara-slime-datta-ken" }}>Tensura debug link</Link>
+            <Link to='/player/$code/$episode' params={{ code: "tensei-shitara-slime-datta-ken", episode: "1" }}>Tensura debug link</Link>
         </main>
     </>
 }
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_navbar/')({
     component: App,
 })

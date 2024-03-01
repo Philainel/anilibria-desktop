@@ -7,3 +7,4 @@ import { TitleRandomRequestOptionsT, TitleT } from "./anilibria-types";
 // }
 
 export const getRandomTitle = generateAPI<TitleRandomRequestOptionsT, TitleT>("/title/random", { playlist_type: "array" })
+export default getRandomTitle

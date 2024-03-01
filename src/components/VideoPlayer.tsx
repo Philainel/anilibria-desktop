@@ -6,12 +6,12 @@ import * as Slider from '@radix-ui/react-slider';
 import { useRouter } from "@tanstack/react-router";
 import { MDIcon } from "./MDIcon";
 
-export function VideoPlayer({ title, className, backArrow: enableBackArrow }: { title: TitleT, className?: string, backArrow?: boolean }) {
+export function VideoPlayer({ title, episode: defaultEpisode = 1, className, backArrow: enableBackArrow }: { title: TitleT, episode?: number, className?: string, backArrow?: boolean }) {
     const { history } = useRouter()
     const containerRef = useRef<HTMLDivElement>(null)
     const playerRef = useRef<ReactPlayer>(null)
     const [isPlaying, setPlaying] = useState(false)
-    const [episode, setEpisode] = useState(0)
+    const [episode, setEpisode] = useState(defaultEpisode - 1)
     const [progress, setProgress] = useState(0)
     const seek = (progress: number) => {
         playerRef.current?.seekTo(progress, "fraction")

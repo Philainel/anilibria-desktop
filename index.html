@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
   </head>
-
-  <body class="w-screen min-h-screen bg-brand-dark text-brand-light">
+  <!-- select-none because tauri is weird - only allow it in specific places like title info -->
+  <body class="w-screen min-h-screen bg-brand-dark text-brand-light select-none">
     <div id="root" class="w-screen min-h-screen"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
