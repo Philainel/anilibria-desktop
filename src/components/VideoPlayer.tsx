@@ -4,6 +4,7 @@ import { TitleT } from "../api/anilibria-types";
 import { useEffect, useRef, useState } from "react";
 import * as Slider from '@radix-ui/react-slider';
 import { useRouter } from "@tanstack/react-router";
+import { MDIcon } from "./MDIcon";
 
 export function VideoPlayer({ title, className, backArrow: enableBackArrow }: { title: TitleT, className?: string, backArrow?: boolean }) {
     const { history } = useRouter()
@@ -36,7 +37,7 @@ export function VideoPlayer({ title, className, backArrow: enableBackArrow }: { 
                 {/* overlay itself */}
                 <div className="bg-gradient-to-b from-black to-transparent text-white p-4 h-16 group flex gap-1 items-center">
                     {enableBackArrow && <button className={`w-0 group-hover:w-8 opacity-0 group-hover:opacity-100 h-8 flex items-center justify-center transition-all`} onClick={() => history.back()}>
-                        <span className="material-symbols-outlined">arrow_back</span>
+                        <MDIcon>arrow_back</MDIcon>
                     </button>}
                     <p>{title.names.ru}</p>
                 </div>
@@ -45,23 +46,23 @@ export function VideoPlayer({ title, className, backArrow: enableBackArrow }: { 
                     <div className="px-2 w-full">
                         <Slider.Root className="h-3 px-2 w-full rounded-full relative flex items-center group cursor-pointer" max={1000} value={[progress * 1000]} onValueChange={value => seek(value[0] / 1000)}>
                             <Slider.Track className="h-1 w-full rounded-full bg-gray-500 relative">
-                                <Slider.Range className="h-full rounded-full bg-white absolute" />
+                                <Slider.Range className="h-full rounded-full bg-brand-primary absolute" />
                             </Slider.Track>
                             <Slider.Thumb className="group-hover:w-2 group-hover:h-2 block rounded-full bg-white" />
                         </Slider.Root>
                     </div>
                     <div className="flex items-center gap-2 px-2 w-full">
                         <button className={`w-8 h-8 flex items-center justify-center ${episode < 1 && 'text-gray-400'}`} onClick={() => setEpisode(episode - 1)} disabled={episode < 1}>
-                            <span className="material-symbols-outlined">skip_previous</span>
+                            <MDIcon>skip_previous</MDIcon>
                         </button>
                         <button className="w-8 h-8 flex items-center justify-center" onClick={() => setPlaying(!isPlaying)} >
-                            {isPlaying ? <span className="material-symbols-outlined">pause</span> : <span className="material-symbols-outlined">play_arrow</span>}
+                            {isPlaying ? <MDIcon className="material-symbols-outlined">pause</MDIcon> : <MDIcon>play_arrow</MDIcon>}
                         </button>
                         <button className={`w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => setEpisode(episode + 1)} disabled={episode >= title.player.list.length - 1} >
-                            <span className="material-symbols-outlined">skip_next</span>
+                            <MDIcon>skip_next</MDIcon>
                         </button>
                         <button className={`ml-auto w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => toggleFullscreen()} disabled={episode >= title.player.list.length - 1} >
-                            <span className="material-symbols-outlined">{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</span>
+                            <MDIcon>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</MDIcon>
                         </button>
                     </div>
                 </div>
