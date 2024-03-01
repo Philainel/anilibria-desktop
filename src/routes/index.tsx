@@ -24,6 +24,7 @@ export function App() {
                 <li>список ожидаемых сегодня</li>
             </ul>
             <Link to='/tensura'>Tensura debug</Link>
+            <Link to='/player/$code' params={{code: "tensei-shitara-slime-datta-ken"}}>Tensura debug via player</Link>
         </main>
     </>
 }

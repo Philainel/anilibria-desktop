@@ -1,4 +1,4 @@
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { VideoPlayer } from "../../components/VideoPlayer";
 import { useEffect, useState } from "react";
 import { getTitle } from "../../api/getTitle";
@@ -15,6 +15,6 @@ function Player() {
         getTitle({ code }).then((title) => { console.log(title); setTitle(title) })
     }, [])
     return <>
-        {title ? <VideoPlayer title={title} className="w-screen h-screen" /> : 'Loading...'}
+        {title ? <VideoPlayer title={title} className="w-screen h-screen" backArrow /> : 'Loading...'}
     </>
 }

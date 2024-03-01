@@ -1,0 +1,1 @@
+export const IS_TAURI = (window as any).__TAURI__ != undefined

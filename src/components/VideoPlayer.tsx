@@ -3,8 +3,10 @@ import { getTitleHLS } from "../api";
 import { TitleT } from "../api/anilibria-types";
 import { useEffect, useRef, useState } from "react";
 import * as Slider from '@radix-ui/react-slider';
+import { useRouter } from "@tanstack/react-router";
 
-export function VideoPlayer({ title, className }: { title: TitleT, className?: string }) {
+export function VideoPlayer({ title, className, backArrow: enableBackArrow }: { title: TitleT, className?: string, backArrow?: boolean }) {
+    const { history } = useRouter()
     const containerRef = useRef<HTMLDivElement>(null)
     const playerRef = useRef<ReactPlayer>(null)
     const [isPlaying, setPlaying] = useState(false)
@@ -32,7 +34,10 @@ export function VideoPlayer({ title, className }: { title: TitleT, className?: s
             <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={false} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({ played }) => setProgress(played)} />
             <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col ">
                 {/* overlay itself */}
-                <div className="bg-gradient-to-b from-black to-transparent text-white p-4 h-16">
+                <div className="bg-gradient-to-b from-black to-transparent text-white p-4 h-16 group flex gap-1 items-center">
+                    {enableBackArrow && <button className={`w-0 group-hover:w-8 opacity-0 group-hover:opacity-100 h-8 flex items-center justify-center transition-all`} onClick={() => history.back()}>
+                        <span className="material-symbols-outlined">arrow_back</span>
+                    </button>}
                     <p>{title.names.ru}</p>
                 </div>
                 <div className="flex-grow-[1]" onClick={() => setPlaying(!isPlaying)}>{/* Pause Icon and stuff! */}</div>
