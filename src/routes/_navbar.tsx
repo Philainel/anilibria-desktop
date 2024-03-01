@@ -23,6 +23,7 @@ export function NavbarLayout({ notFound }: { notFound?: boolean }) {
                 <form onSubmit={submitSearch}>
                     <input type="text" className='bg-brand-light text-brand-dark px-4 py-2 rounded-md' placeholder='Поиск...' />
                 </form>
+                <L path="/random">Мне повезёт!</L>
                 <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer ml-auto'><MDIcon>settings</MDIcon></a>
                 <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><MDIcon>notifications</MDIcon></a>
                 <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><img src="https://placehold.co/128x128.png" width={32} className='rounded-full' /></a>
