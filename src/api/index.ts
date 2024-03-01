@@ -19,12 +19,16 @@ export async function ripplingRequest<T, D, R>(c: AxiosRequestConfig<T>): Promis
             // console.log("response:")
             // console.log(response)
             return response
-        } catch(e) {
+        } catch (e) {
             console.error(`Something went wrong while requesting mirror ${mirror}:`)
             console.error(e)
         }
     }
     throw Error('Failed to request - all mirrors are down?')
+}
+
+export function generateAPI<T extends Record<string, any>, R extends Record<string, any>>(route: string, overrideOpts?: T): (request: T) => Promise<R> {
+    return async (request) => JSON.parse((await ripplingRequest({ url: route + "?" + new URLSearchParams({ ...request, ...overrideOpts }).toString() })).data as string);
 }
 
 export function getTitleHLS(title: TitleT, episode: playerListT, quality: "fhd" | "hd" | "sd") {
