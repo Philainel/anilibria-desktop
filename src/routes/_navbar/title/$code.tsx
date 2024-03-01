@@ -2,7 +2,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import getTitle from '../../../api/getTitle'
 import { MDIcon } from '../../../components/MDIcon'
 
-function TitleInformation() {
+export function TitleInformation({Route}: {Route: any}) {
     const title = Route.useLoaderData()
     return <main className='p-4 flex gap-4'>
         <img src={"https://anilibria.tv" + title.posters.original.url} alt={`Постер для "${title.names.ru}"`} className="rounded-3xl h-[16rem]" />
@@ -26,6 +26,6 @@ function TitleInformation() {
 }
 
 export const Route = createFileRoute('/_navbar/title/$code')({
-    component: TitleInformation,
+    component: () => <TitleInformation Route={Route}/>,
     loader: ({ params }) => getTitle({ code: params.code })
 })
