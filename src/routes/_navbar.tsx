@@ -1,4 +1,4 @@
-import { Link, Outlet, ParsedLocation, createFileRoute, useNavigate, useRouter, useRouterState } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, useNavigate, useRouterState } from "@tanstack/react-router";
 import { MDIcon } from "../components/MDIcon";
 
 export const Route = createFileRoute("/_navbar")({
