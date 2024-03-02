@@ -1,11 +1,17 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
 import Title from '../../components/title';
+import getUpdatedTitles from '../../api/getUpdatedTitles';
 
 // kraska was here owo :3
 export function App() {
     return <>
         <main className='p-4 flex flex-col gap-4'>
-            <Title />
+            <Title suspendQuery={async () => {
+                const recentTitles = (await getUpdatedTitles({ limit: 10 })).list.filter(t => t.player.list.length > 0)
+                if (recentTitles.length == 0)
+                    throw new Error('could not find suitable title withing 10 recent releases!')
+                return recentTitles[Math.floor(Math.random() * recentTitles.length)]
+            }} />
             <section className='flex-shrink flex flex-col'>
                 <h2 className='text-3xl my-4'>Продолжить просмотр</h2>
                 <div className="flex gap-4 overflow-x-auto">

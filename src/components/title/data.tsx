@@ -1,16 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
-import getUpdatedTitles from "../../api/getUpdatedTitles"
 import { MDIcon } from "../MDIcon"
+import { TitleT } from "../../api/anilibria-types"
 
-export default function TitleData() {
+export default function TitleData({ suspendQuery }: { suspendQuery: () => TitleT | Promise<TitleT> }) {
 	const query = useSuspenseQuery({
-		queryKey: ["hot-release"], queryFn: async () => {
-			const recentTitles = (await getUpdatedTitles({ limit: 10 })).list.filter(t => t.player.list.length > 0)
-			if (recentTitles.length == 0)
-				throw new Error('could not find suitable title withing 10 recent releases!')
-			return recentTitles[Math.floor(Math.random() * recentTitles.length)]
-		}
+		queryKey: ["hot-release"], queryFn: suspendQuery
 	})
 	const title = query.data
 	return <section className='flex'>
