@@ -8,7 +8,7 @@ import TitleFallback from '../../../components/title/fallback'
 // TODO: POSTER DOMAIN
 export function TitleInformation() {
     const title: TitleT = Route.useLoaderData()
-    return <main className='p-4 flex flex-col gap-4'>
+    return <main className='p-8 flex flex-col gap-4'>
         {/* <img src={"https://wwnd.anilib.moe/" + title.posters.original.url} alt={`Постер для "${title.names.ru}"`} className="rounded-3xl h-[16rem]" />
         <div>
             <h2 className="text-3xl mb-4">{title.names.ru}</h2>
@@ -19,7 +19,7 @@ export function TitleInformation() {
                 <a className='bg-brand-light text-brand-dark px-4 py-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><MDIcon className='inline-block'>star</MDIcon>Избранное</a>
             </div>
         </div> */}
-        <Title suspendQuery={() => title} key={title.code} />
+        <Title suspendQuery={() => title} key={title.code} allowExpanding />
         <h3 className="my-4 text-2xl">Список эпизодов</h3>
         <ul>
             {title.player.list.map(it => <li key={it.uuid} className='text-brand-primary underline'><Link to="/player/$code/$episode" params={{ code: title.code, episode: `${it.episode}` }}>{it.name == null ? "Эпизод " : "E"}{it.episode.toLocaleString('en-US', {

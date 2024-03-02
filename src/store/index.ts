@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 import watchProgress from "./slice/watchProgress";
 
-export const store = configureStore({ reducer: { watchProgress }, preloadedState: JSON.parse(window.localStorage.getItem("saved")!) as unknown })
+export const store = configureStore({ reducer: { watchProgress }, preloadedState: window.localStorage.getItem("saved") != null ? JSON.parse(window.localStorage.getItem("saved")!) as unknown : undefined})
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>

@@ -8,7 +8,7 @@ import { getTitleProgress } from "../../store/slice/watchProgress"
 
 export default function TitleData({ suspendQuery, allowExpanding }: { suspendQuery: () => TitleT | Promise<TitleT>, allowExpanding?: boolean }) {
 	const query = useSuspenseQuery({
-		queryKey: [], queryFn: suspendQuery
+		queryKey: [], queryFn: suspendQuery, staleTime: 0
 	})
 	const title = query.data
 	const lastEp = useAppSelector(getTitleProgress(title.code))
@@ -49,7 +49,7 @@ export default function TitleData({ suspendQuery, allowExpanding }: { suspendQue
 				<span className={`inline-block text-xl w-full ${expanded ? `max-h-min ` : `max-h-20 overflow-hidden text-ellipsis`}`}>
 					{title.description}
 				</span>
-				{title.description.length > 450 && <button className="text-left text-blue-500 h-8" onClick={() => setExpanded(!expanded)}>{expanded ? 'Свернуть' : 'Подробнее...'}</button>}
+				{allowExpanding && title.description.length > 450 && <button className="text-left text-blue-500 h-8" onClick={() => setExpanded(!expanded)}>{expanded ? 'Свернуть' : 'Подробнее...'}</button>}
 			</div>
 			<div className='my-4 mt-auto flex'>
 				<Link to="/player/$code/$episode" params={{ code: title.code, episode: `${episode == "last" ? title.player.episodes.last : episode ?? 1}` }} className='bg-brand-primary text-brand-light px-4 py-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><MDIcon className='inline-block'>play_arrow</MDIcon>{(episode ?? 1) == 1 ? 'Начать просмотр' : episode == "last" ? 'Посмотреть заново' : `Продолжить с серии ${episode}`}</Link>
