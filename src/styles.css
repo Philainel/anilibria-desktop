@@ -1,13 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
 /* .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+	font-variation-settings:
+	'FILL' 0,
+	'wght' 400,
+	'GRAD' 0,
+	'opsz' 24
 } */
 
 /* tailwind owo */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.mask-image-linear {
+		mask-image: linear-gradient(to left, rgba(0,0,0,0), theme(colors.brand.dark) 30%);
+	}
+}

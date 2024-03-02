@@ -7,9 +7,12 @@ export default {
         brand: {
           primary: "#D44D5C",
           light: "#F5E9E2",
-          dark: "#0B0014",
+          dark: "#03000A",
         },
       },
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif']
+      }
     },
   },
   plugins: [],

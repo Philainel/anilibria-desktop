@@ -3,10 +3,11 @@ import getTitle from '../../../api/getTitle'
 import { MDIcon } from '../../../components/MDIcon'
 import { TitleT } from '../../../api/anilibria-types'
 
+// TODO: POSTER DOMAIN
 export function TitleInformation({Route}: {Route: any}) {
     const title: TitleT = Route.useLoaderData()
     return <main className='p-4 flex gap-4'>
-        <img src={"https://anilibria.tv" + title.posters.original.url} alt={`Постер для "${title.names.ru}"`} className="rounded-3xl h-[16rem]" />
+        <img src={"https://wwnd.anilib.moe/" + title.posters.original.url} alt={`Постер для "${title.names.ru}"`} className="rounded-3xl h-[16rem]" />
         <div>
             <h2 className="text-3xl mb-4">{title.names.ru}</h2>
             <p className="my-4 text-xl">{title.description}</p>
