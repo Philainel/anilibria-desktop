@@ -2,9 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
 import { MDIcon } from "../MDIcon"
 import { TitleT } from "../../api/anilibria-types"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { useAppSelector } from "../../store"
 import { getTitleProgress } from "../../store/slice/watchProgress"
+import { Img } from "react-suspense-img"
 
 export default function TitleData({ suspendQuery, allowExpanding }: { suspendQuery: () => TitleT | Promise<TitleT>, allowExpanding?: boolean }) {
 	const query = useSuspenseQuery({
@@ -15,7 +16,9 @@ export default function TitleData({ suspendQuery, allowExpanding }: { suspendQue
 	const episode = lastEp == title.player.episodes.last ? "last" : lastEp
 	const [expanded, setExpanded] = useState(false)
 	return <section className='flex'>
-		<img className='block bg-brand-light text-brand-dark aspect-[2/3] rounded-md h-fit' width={256} height={384} src={`https://wwnd.anilib.moe${title.posters.medium.url}`} />
+		<Suspense fallback={<div className='block bg-brand-semidark aspect-[2/3] rounded-md w-[256px] h-[384px] animate-pulse' />}>
+			<Img className='block bg-brand-semidark text-brand-dark aspect-[2/3] rounded-md h-fit' width={256} height={384} src={`https://wwnd.anilib.moe${title.posters.medium.url}`} />
+		</Suspense>
 		<div className='bg-transparent text-brand-light p-8 flex flex-col gap-6 justify-stretch w-full'>
 			<Link to="/title/$code" params={{ code: title.code }}><h2 className='text-3xl font-bold'>{title.names.ru}</h2></Link>
 			<div className="flex flex-row justify-start gap-10 md:gap-16">
