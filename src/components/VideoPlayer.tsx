@@ -62,7 +62,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
                         <button className={`w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => setEpisode(episode + 1)} disabled={episode >= title.player.list.length - 1} >
                             <MDIcon>skip_next</MDIcon>
                         </button>
-                        <button className={`ml-auto w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => toggleFullscreen()} disabled={episode >= title.player.list.length - 1} >
+                        <button className={`ml-auto w-8 h-8 flex items-center justify-center`} onClick={() => toggleFullscreen()} >
                             <MDIcon>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</MDIcon>
                         </button>
                     </div>
