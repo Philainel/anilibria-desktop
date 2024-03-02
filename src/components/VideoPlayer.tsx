@@ -27,6 +27,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
             setFullscreen(true)
         }
     }
+    console.log(title)
     useEffect(() => {
         setFullscreen(document.fullscreenElement != null)
     }, [])
