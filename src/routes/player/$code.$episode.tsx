@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from "react";
 import { getTitle } from "../../api/getTitle";
 import { TitleT } from "../../api/anilibria-types";
 import SuspensedVideoPlayer from "../../components/SuspensedVideoPlayer";
+import { useAppDispatch } from "../../store";
+import { saveEp } from "../../store/slice/watchProgress";
 
 export const Route = createFileRoute('/player/$code/$episode')({
     component: Player,
@@ -11,6 +13,14 @@ export const Route = createFileRoute('/player/$code/$episode')({
 
 function Player() {
     const {code, episode} = Route.useParams()
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log("save ep!")
+            dispatch(saveEp({code, ep: +episode, progress: 0}))
+        }, 5000)
+        return () => clearInterval(interval)
+    })
     return <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center">Loading...</div>}>
         <SuspensedVideoPlayer title={getTitle({code})} episode={+episode} className="w-screen h-screen" backArrow />
     </Suspense>

@@ -5,7 +5,7 @@ import getUpdatedTitles from '../../api/getUpdatedTitles';
 // kraska was here owo :3
 export function App() {
     return <>
-        <main className='p-4 flex flex-col gap-4'>
+        <main className='p-8 flex flex-col gap-4'>
             <Title suspendQuery={async () => {
                 const recentTitles = (await getUpdatedTitles({ limit: 10 })).list.filter(t => t.player.list.length > 0)
                 if (recentTitles.length == 0)

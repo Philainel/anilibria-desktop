@@ -6,7 +6,8 @@ import { IS_TAURI } from './util'
 
 // Create a new router instance
 export const router = createRouter({
-	routeTree, history: IS_TAURI ? createHashHistory() : createBrowserHistory()
+	routeTree, history: IS_TAURI ? createHashHistory() : createBrowserHistory(),
+	defaultPendingMinMs: 0
 })
 
 
