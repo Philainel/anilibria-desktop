@@ -11,7 +11,7 @@ export default function TitleData({ suspendQuery }: { suspendQuery: () => TitleT
 	return <section className='flex'>
 		<img className='block bg-brand-light text-brand-dark aspect-[2/3] rounded-md' width={256} height={384} src={`https://wwnd.anilib.moe${title.posters.medium.url}`} />
 		<div className='bg-transparent text-brand-light p-8 flex flex-col gap-6 justify-stretch'>
-			<h2 className='text-3xl font-bold'>{title.names.ru}</h2>
+			<Link to="/title/$code" params={{code: title.code}}><h2 className='text-3xl font-bold'>{title.names.ru}</h2></Link>
 			<div className="flex flex-row">
 				<div className="flex flex-col w-2/5">
 					<div>
