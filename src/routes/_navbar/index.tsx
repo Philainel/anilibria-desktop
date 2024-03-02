@@ -19,7 +19,7 @@ export function App() {
                     <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
                 </div>
             </section>
-            <section className='flex-shrink flex flex-col'>
+            <section className='shrink flex flex-col'>
                 <h2 className='text-3xl my-4'>Ожидается сегодня</h2>
                 <div className="flex gap-4 overflow-x-auto">
                     <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
