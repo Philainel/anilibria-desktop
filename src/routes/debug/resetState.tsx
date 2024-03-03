@@ -1,8 +1,12 @@
-import { Navigate, createFileRoute } from "@tanstack/react-router"
+import { Navigate, createFileRoute, useNavigate } from "@tanstack/react-router"
+import { useEffect } from "react"
 
 function ResetState() {
-    window.localStorage.clear()
-    return <Navigate to="/" replace />
+    useEffect(() => {
+        window.localStorage.clear()
+        window.location.href = "/"
+    }, [])
+    return <>You should be redirected.</>
 }
 
 export const Route = createFileRoute('/debug/resetState')({
