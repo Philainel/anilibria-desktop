@@ -9,19 +9,25 @@ import { saveEp } from "../../store/slice/watchProgress";
 
 export const Route = createFileRoute('/player/$code/$episode')({
     component: Player,
+    validateSearch: (search: Record<string, unknown>): {progress?: number} => {
+        return {
+            progress: search["progress"] != undefined ? +(search["progress"] as string) : 0
+        }
+    }
 })
 
 function Player() {
     const {code, episode} = Route.useParams()
+    const {progress} = Route.useSearch()
     const dispatch = useAppDispatch()
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log("save ep!")
-            dispatch(saveEp({code, ep: +episode, progress: 0}))
-        }, 5000)
-        return () => clearInterval(interval)
-    })
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         console.log("save ep!")
+    //         dispatch(saveEp({code, ep: +episode, progress: 0}))
+    //     }, 5000)
+    //     return () => clearInterval(interval)
+    // })
     return <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center">Loading...</div>}>
-        <SuspensedVideoPlayer title={getTitle({code})} episode={+episode} className="w-screen h-screen" backArrow />
+        <SuspensedVideoPlayer title={getTitle({code})} episode={+episode} className="w-screen h-screen" backArrow progressCallback={(progress) => dispatch(saveEp({code, ep: +episode, progress}))} initialProgress={progress}/>
     </Suspense>
 }
