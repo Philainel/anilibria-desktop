@@ -25,6 +25,6 @@ export function TitleInformation() {
 
 export const Route = createFileRoute('/_navbar/title/$code')({
     component: () => <TitleInformation />,
-    loader: ({ params }) => getTitle({ code: params.code }),
     pendingComponent: () => <main className='p-8 flex flex-col gap-4'><TitleFallback short={false} /></main>,
+    loader: ({ params }) => getTitle({ code: params.code }),
 })

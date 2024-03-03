@@ -9,6 +9,7 @@ import { saveEp } from "../../store/slice/watchProgress";
 
 export const Route = createFileRoute('/player/$code/$episode')({
     component: Player,
+    pendingComponent: () => <></>, // this fixes stuff???
     validateSearch: (search: Record<string, unknown>): {progress?: number} => {
         return {
             progress: search["progress"] != undefined ? +(search["progress"] as string) : 0
