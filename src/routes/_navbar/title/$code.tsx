@@ -7,7 +7,7 @@ import TitleFallback from '../../../components/title/fallback'
 // TODO: POSTER DOMAIN
 export function TitleInformation() {
     const title: TitleT = Route.useLoaderData()
-    return <main className='p-8 flex flex-col gap-4'>
+    return <main className='flex flex-col gap-4'>
         <Title suspendQuery={() => title} key={title.code} allowExpanding />
         <h3 className="my-4 text-2xl">Список эпизодов</h3>
         <ul className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

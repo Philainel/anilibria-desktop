@@ -14,7 +14,7 @@ import { MDSpinner } from '../../components/MDSpinner';
 export function App() {
     const lastWatchedTitles = useAppSelector(getLatestViewed)
     return <>
-        <main className='p-8 flex flex-col gap-4'>
+        <main className='flex flex-col gap-4'>
             <Title suspendQuery={async () => {
                 const recentTitles = (await getUpdatedTitles({ limit: 10 })).list.filter(t => t.player.list.length > 0)
                 if (recentTitles.length == 0)

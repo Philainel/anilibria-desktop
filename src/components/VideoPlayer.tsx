@@ -57,9 +57,9 @@ export function VideoPlayer({
         setFullscreen(document.fullscreenElement != null)
     }, [])
     const handleHotkey: React.EventHandler<KeyboardEvent<HTMLDivElement>> = (e) => {
-        console.log("keypress")
-        console.log(e)
-        if(!enableHotkeys) return
+        // console.log("keypress")
+        // console.log(e)
+        if (!enableHotkeys) return
         switch (e.key) {
             case 'k':
             case 'space':
@@ -80,6 +80,21 @@ export function VideoPlayer({
                     e.preventDefault()
                     const newTime = Math.min((playerRef.current!.getCurrentTime() + 10) / playerRef.current!.getDuration(), 1)
                     seek(newTime)
+                    break
+                }
+            case 'ArrowLeft':
+                {
+                    e.preventDefault()
+                    const newTime = Math.max((playerRef.current!.getCurrentTime() - 5) / playerRef.current!.getDuration(), 0)
+                    seek(newTime)
+                    break
+                }
+            case 'ArrowRight':
+                {
+                    e.preventDefault()
+                    const newTime = Math.max((playerRef.current!.getCurrentTime() + 5) / playerRef.current!.getDuration(), 0)
+                    seek(newTime)
+                    break
                 }
         }
     }
