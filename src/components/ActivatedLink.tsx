@@ -1,7 +1,5 @@
-import { ReactNode } from "react";
 import ActiveWrapper, { ActiveWrapperProps } from "./ActiveWrapper";
-import { Link, LinkComponent, LinkProps, RegisteredRouter, useRouterState } from "@tanstack/react-router";
-import { routeTree } from "../routeTree.gen";
+import { Link, LinkComponent, useRouterState } from "@tanstack/react-router";
 
 const ActivatedLink: LinkComponent<Omit<ActiveWrapperProps, 'children' | 'activeCriterion'>> = (props) => {
     const { location } = useRouterState()

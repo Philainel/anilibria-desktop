@@ -14,20 +14,22 @@ export function NavbarLayout({ notFound }: { notFound?: boolean }) {
         e.preventDefault()
         navigate({ to: "/search", search: { query: (e.currentTarget.firstElementChild as HTMLInputElement).value } })
     }
+    const activeLink = 'bg-brand-light text-brand-dark'
+    const inactiveLink = 'bg-brand-primary text-brand-light';
     return <div className="p-8 flex flex-col gap-8">
         <header>
             <nav className='flex gap-4 items-center'>
                 <img src="/favicon.svg" width={32} className='rounded-full' />
-                <L to="/" commonClass="px-4 py-2 rounded-md" activeClass="bg-brand-primary text-brand-light" inactiveClass="bg-brand-light text-brand-dark">Релизы</L>
-                <L to="/catalog" commonClass="px-4 py-2 rounded-md" activeClass="bg-brand-primary text-brand-light" inactiveClass="bg-brand-light text-brand-dark">Каталог</L>
-                <L to="/favorite" commonClass="px-4 py-2 rounded-md" activeClass="bg-brand-primary text-brand-light" inactiveClass="bg-brand-light text-brand-dark">Избранное</L>
+                <L to="/" commonClass="px-4 py-2 rounded-md" activeClass={activeLink} inactiveClass={inactiveLink}>Релизы</L>
+                <L to="/catalog" commonClass="px-4 py-2 rounded-md" activeClass={activeLink} inactiveClass={inactiveLink}>Каталог</L>
+                <L to="/favorite" commonClass="px-4 py-2 rounded-md" activeClass={activeLink} inactiveClass={inactiveLink}>Избранное</L>
                 <form onSubmit={submitSearch}>
                     <input type="text" className='bg-brand-light text-brand-dark px-4 py-2 rounded-md' placeholder='Поиск...' />
                 </form>
-                <L to="/random" commonClass="px-4 py-2 rounded-md" activeClass="bg-brand-primary text-brand-light" inactiveClass="bg-brand-light text-brand-dark">Мне повезёт!</L>
-                <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer ml-auto'><MDIcon>settings</MDIcon></a>
-                <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><MDIcon>notifications</MDIcon></a>
-                <a className='text-brand-light p-2 rounded-md flex items-center w-fit gap-2 cursor-pointer'><img src="https://placehold.co/128x128.png" width={32} className='rounded-full' /></a>
+                <L to="/random" commonClass="px-4 py-2 rounded-md" activeClass={activeLink} inactiveClass={inactiveLink}>Мне повезёт!</L>
+                <L to="/settings" commonClass='p-2 flex items-center w-fit ml-auto' activeClass="rounded-md bg-brand-light text-brand-dark"><MDIcon>settings</MDIcon></L>
+                <a className='p-2 flex items-center w-fit cursor-pointer'><MDIcon>notifications</MDIcon></a>
+                <a className='p-2 flex items-center w-fit cursor-pointer'><img src="https://placehold.co/128x128.png" width={32} className='rounded-full' /></a>
             </nav>
         </header>
         {notFound && <main className='p-4'>
