@@ -7,8 +7,17 @@ import { router } from "./app";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { saveState, store } from "./store";
 import { Provider as ReduxProvider } from "react-redux";
+import { AnilibriaWS } from "./websocket";
+import { pushNewRelease } from "./store/slice/notifications";
+import getTitle from "./api/getTitle";
 
 const queryClient = new QueryClient()
+// console.log(import.meta.env.WS)
+const anilibriaWS = new AnilibriaWS(/* import.meta.env.WS == "LOCAL" ? */ "ws://localhost:1800" /* : "wss://api.anilibria.tv/v3/ws" */)
+
+anilibriaWS.addEventListener("playlist_update", (e) => {
+	getTitle({ filter: "code", id: e.detail.data.id }).then(({ code }) => store.dispatch(pushNewRelease(code)))
+})
 
 setInterval(() => saveState(), 3000)
 

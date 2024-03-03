@@ -136,7 +136,7 @@ export function VideoPlayer({
                                     <MDIcon>{quality == 'fhd' ? 'full_hd' : quality}</MDIcon>
                                 </button>
                             </Dropdown.Trigger>
-                            <Dropdown.Portal>
+                            {/* <Dropdown.Portal> */}
                                 <Dropdown.Content className="bg-brand-semidark rounded-md p-4" sideOffset={20}>
                                     <Dropdown.RadioGroup value={quality} onValueChange={(value) => setQuality(value as any)} className="flex flex-col gap-4">
                                         <Dropdown.RadioItem className="flex gap-2 items-center cursor-pointer" value="fhd">
@@ -150,7 +150,7 @@ export function VideoPlayer({
                                         </Dropdown.RadioItem>
                                     </Dropdown.RadioGroup>
                                 </Dropdown.Content>
-                            </Dropdown.Portal>
+                            {/* </Dropdown.Portal> */}
                         </Dropdown.Root>
                         <button className={`w-8 h-8 flex items-center justify-center`} onClick={() => toggleFullscreen()} >
                             <MDIcon>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</MDIcon>
