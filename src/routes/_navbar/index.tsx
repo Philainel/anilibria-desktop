@@ -21,7 +21,7 @@ export function App() {
                     throw new Error('could not find suitable title withing 10 recent releases!')
                 return recentTitles[Math.floor(Math.random() * recentTitles.length)]
             }} />
-            <Shelf name='Продолжить просмотр'>{() => Promise.all(lastWatchedTitles.map(it => getTitle({ code: it })))}</Shelf>
+            {lastWatchedTitles.length > 0 && <Shelf name='Продолжить просмотр'>{() => Promise.all(lastWatchedTitles.map(it => getTitle({ code: it })))}</Shelf>}
             <Shelf name='Ожидается сегодня'>{async () => (await getSchedule({ days: `${new Date().getDay()}` }))[0].list}</Shelf>
             <Link to='/player/$code/$episode' params={{ code: "tensei-shitara-slime-datta-ken", episode: "1" }}>Tensura debug link</Link>
         </main>

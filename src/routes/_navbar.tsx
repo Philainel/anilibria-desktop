@@ -15,7 +15,7 @@ export function NavbarLayout({ notFound }: { notFound?: boolean }) {
     }
     return <>
         <header>
-            <nav className='flex gap-4 p-4 items-center'>
+            <nav className='flex gap-4 p-8 items-center'>
                 <img src="/favicon.svg" width={32} className='rounded-full' />
                 <L path="/">Релизы</L>
                 <L path="/catalog">Каталог</L>
