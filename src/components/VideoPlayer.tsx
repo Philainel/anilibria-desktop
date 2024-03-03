@@ -1,7 +1,7 @@
 import ReactPlayer, { ReactPlayerProps } from "react-player";
 import { getTitleHLS } from "../api";
 import { TitleT } from "../api/anilibria-types";
-import { useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import * as Slider from '@radix-ui/react-slider';
 import { useRouter } from "@tanstack/react-router";
 import { MDIcon } from "./MDIcon";
@@ -10,7 +10,25 @@ import { getEpisodeProgress } from "../store/slice/watchProgress";
 import { MDSpinner } from "./MDSpinner";
 import * as Dropdown from '@radix-ui/react-dropdown-menu'
 
-export function VideoPlayer({ title, episode: defaultEpisode = 1, className, backArrow: enableBackArrow, initialProgress = 0, progressCallback = (progress) => { } }: { title: TitleT, episode?: number, className?: string, backArrow?: boolean, progressCallback?: (progress: number) => void, initialProgress?: number }) {
+export type VideoPlayerProps = {
+    title: TitleT,
+    episode?: number,
+    className?: string,
+    backArrow?: boolean,
+    progressCallback?: (progress: number) => void,
+    initialProgress?: number,
+    hotkeys?: boolean
+}
+
+export function VideoPlayer({
+    title,
+    episode: defaultEpisode = 1,
+    className,
+    backArrow: enableBackArrow,
+    initialProgress = 0,
+    progressCallback = (progress) => { },
+    hotkeys: enableHotkeys
+}: VideoPlayerProps) {
     const { history } = useRouter()
     const containerRef = useRef<HTMLDivElement>(null)
     const playerRef = useRef<ReactPlayer>(null)
@@ -38,7 +56,34 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
     useEffect(() => {
         setFullscreen(document.fullscreenElement != null)
     }, [])
-    return <div className={className || "w-fit"} ref={containerRef}>
+    const handleHotkey: React.EventHandler<KeyboardEvent<HTMLDivElement>> = (e) => {
+        console.log("keypress")
+        console.log(e)
+        if(!enableHotkeys) return
+        switch (e.key) {
+            case 'k':
+            case 'space':
+                {
+                    e.preventDefault()
+                    setPlaying(!isPlaying)
+                    break
+                }
+            case 'j':
+                {
+                    e.preventDefault()
+                    const newTime = Math.max((playerRef.current!.getCurrentTime() - 10) / playerRef.current!.getDuration(), 0)
+                    seek(newTime)
+                    break
+                }
+            case 'l':
+                {
+                    e.preventDefault()
+                    const newTime = Math.min((playerRef.current!.getCurrentTime() + 10) / playerRef.current!.getDuration(), 1)
+                    seek(newTime)
+                }
+        }
+    }
+    return <div className={className || "w-fit"} ref={containerRef} onKeyDown={handleHotkey} tabIndex={enableHotkeys ? 0 : undefined}>
         <div className="relative bg-black w-[inherit] h-[inherit]"> {/* black bg for better vis */}
             <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={true} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], quality)} onProgress={({ played }) => { setProgress(played); progressCallback(played) }} onDuration={() => seek(progress)} onBuffer={() => setBuffering(true)} onBufferEnd={() => setBuffering(false)} />
             <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col opacity-0 transition-all delay-[1s] duration-200 hover:opacity-100 hover:delay-0">
@@ -61,13 +106,13 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
                         </Slider.Root>
                     </div>
                     <div className="flex items-center gap-2 px-2 w-full">
-                        <button className={`w-8 h-8 flex items-center justify-center ${episode < 1 && 'text-gray-400'}`} onClick={() => setEpisode(episode - 1)} disabled={episode < 1}>
+                        <button className={`w-8 h-8 flex items-center justify-center ${episode < 1 && 'text-gray-400'}`} onClick={() => { setEpisode(episode - 1); setProgress(0) }} disabled={episode < 1}>
                             <MDIcon>skip_previous</MDIcon>
                         </button>
                         <button className="w-8 h-8 flex items-center justify-center" onClick={() => setPlaying(!isPlaying)} >
                             {isPlaying ? <MDIcon className="material-symbols-outlined">pause</MDIcon> : <MDIcon>play_arrow</MDIcon>}
                         </button>
-                        <button className={`w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => setEpisode(episode + 1)} disabled={episode >= title.player.list.length - 1} >
+                        <button className={`w-8 h-8 flex items-center justify-center ${episode >= title.player.list.length - 1 && 'text-gray-400'}`} onClick={() => { setEpisode(episode + 1); setProgress(0) }} disabled={episode >= title.player.list.length - 1} >
                             <MDIcon>skip_next</MDIcon>
                         </button>
                         <Dropdown.Root>

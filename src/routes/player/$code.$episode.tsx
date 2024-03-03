@@ -29,6 +29,6 @@ function Player() {
     //     return () => clearInterval(interval)
     // })
     return <Suspense fallback={<div className="w-screen h-screen flex justify-center items-center">Loading...</div>}>
-        <SuspensedVideoPlayer title={getTitle({code})} episode={+episode} className="w-screen h-screen" backArrow progressCallback={(progress) => dispatch(saveEp({code, ep: +episode, progress}))} initialProgress={progress}/>
+        <SuspensedVideoPlayer title={getTitle({code})} episode={+episode} className="w-screen h-screen" backArrow progressCallback={(progress) => dispatch(saveEp({code, ep: +episode, progress}))} initialProgress={progress} hotkeys/>
     </Suspense>
 }
