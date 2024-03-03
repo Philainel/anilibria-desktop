@@ -8,7 +8,7 @@ export function ShelfData({ name, children: queryFn, key }: { name: string, chil
     return <section className='flex-shrink flex flex-col'>
         <h2 className='text-3xl my-4'>{name}</h2>
         <div className="flex gap-4 overflow-x-auto">
-            {titles.map(it => <Link to="/title/$code" params={{code: it.code}}><img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' width={256} height={384} src={`https://wwnd.anilib.moe${it.posters.medium.url}`} /></Link>)}
+            {titles.map(it => <Link to="/title/$code" params={{code: it.code}}><img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-md' width={256} height={384} src={`https://wwnd.anilib.moe${it.posters.medium.url}`} /></Link>)}
         </div>
     </section>;
 }
