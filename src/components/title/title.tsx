@@ -7,7 +7,7 @@ export default function TitleData({ suspendQuery, allowExpanding, short, key }: 
 		queryKey: ["title-"+key], queryFn: suspendQuery, staleTime: 0
 	})
 	if (!query.isSuccess) return <></>
-	console.log(query.data)
+	/*console.log(query.data)*/
 	const title = query.data
 	return RawTitleData({ title, short, allowExpanding })
 }

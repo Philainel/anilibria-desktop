@@ -26,7 +26,7 @@ export const watchProgressSlice = createSlice({
         state.value[action.payload.code].lastEp = action.payload.ep
         state.value[action.payload.code].progress = state.value[action.payload.code].progress ?? {}
         state.value[action.payload.code].progress[action.payload.ep] = action.payload.progress
-        console.log(state)
+        /*console.log(state)*/
     }
   },
 })

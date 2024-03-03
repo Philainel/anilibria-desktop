@@ -16,7 +16,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
     const [episode, setEpisode] = useState(defaultEpisode - 1)
     const [progress, setProgress] = useState(0)
     const seek = (progress: number) => {
-        console.log("Seeking to "+progress)
+        /*console.log("Seeking to "+progress)*/
         playerRef.current?.seekTo(progress, "fraction")
         setProgress(progress)
     }
@@ -30,7 +30,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
             setFullscreen(true)
         }
     }
-    console.log(title)
+    /*console.log(title)*/
     useEffect(() => {
         setFullscreen(document.fullscreenElement != null)
     }, [])

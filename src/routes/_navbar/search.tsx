@@ -6,7 +6,7 @@ export function Search() {
     const { query } = Route.useSearch()
     return <>
         <main className='p-8 flex flex-col gap-4'>
-            <TitleList suspendQuery={async () => {let a = (await apiSearch({ search: query })); console.log(a); return a.list}} key={'search-results-'+query} />
+            <TitleList suspendQuery={async () => {let a = (await apiSearch({ search: query })); /*console.log(a);*/ return a.list}} key={'search-results-'+query} />
         </main>
     </>
 }
@@ -22,7 +22,7 @@ export function Search() {
 
 // function SearchResults({ query }: { query: string }) {
 //     const results = useSuspenseQuery({ queryKey: ["search-results"], queryFn: async () => await apiSearch({ search: query }) })
-//     console.log(results.data.list)
+//     /*console.log(results.data.list)*/
 //     return <ul className="flex flex-col gap-4">
 //         {results.data.list.map(it => <li key={it.code}><Link to="/title/$code" params={{ code: it.code }}>
 //             <Title suspendQuery={() => it} short={true} key={it.id.toString()} /> </Link></li>)}

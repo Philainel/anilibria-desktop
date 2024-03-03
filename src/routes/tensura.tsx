@@ -7,7 +7,7 @@ import { VideoPlayer } from '../components/VideoPlayer';
 function Tensura() {
     const [title, setTitle] = useState<TitleT>()
     useEffect(() => {
-        getTitle({ code: 'tensei-shitara-slime-datta-ken' }).then((title) => { console.log(title); setTitle(title) })
+        getTitle({ code: 'tensei-shitara-slime-datta-ken' }).then((title) => { /*console.log(title);*/ setTitle(title) })
     }, [])
     return <>
         {title ? <VideoPlayer title={title} className="w-screen h-[50vh]" /> : 'Loading...'}

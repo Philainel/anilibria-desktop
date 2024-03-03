@@ -23,7 +23,7 @@ function Player() {
     const dispatch = useAppDispatch()
     // useEffect(() => {
     //     const interval = setInterval(() => {
-    //         console.log("save ep!")
+    //         /*console.log("save ep!")*/
     //         dispatch(saveEp({code, ep: +episode, progress: 0}))
     //     }, 5000)
     //     return () => clearInterval(interval)
