@@ -14,6 +14,6 @@ export const getRandomTitle = generateAPI<TitleRandomRequestOptionsT, TitleT>("/
     },
 });
 
-(window as any).getRandomTitle = getRandomTitle;
+// (window as any).getRandomTitle = getRandomTitle;
 
 export default getRandomTitle

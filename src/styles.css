@@ -16,6 +16,51 @@
 
 @layer components {
 	.mask-image-linear {
-		mask-image: linear-gradient(to left, rgba(0,0,0,0), theme(colors.brand.dark) 30%);
+		mask-image: linear-gradient(to left, rgba(0, 0, 0, 0), theme(colors.brand.dark) 30%);
+	}
+}
+
+/* // Here is where the magic happens */
+
+/* $offset: 187; */
+/* $duration: 1.4s; */
+
+.md-spinner {
+	--spinner-offset: 187;
+	--spinner-duration: 1.4s;
+	animation: md-spinner-rotator var(--spinner-duration) linear infinite;
+}
+
+@keyframes md-spinner-rotator {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(270deg);
+	}
+}
+
+.md-spinner__path {
+	stroke-dasharray: var(--spinner-offset);
+	stroke-dashoffset: 0;
+	transform-origin: center;
+	animation:
+		md-spinner-dash var(--spinner-duration) ease-in-out infinite;
+}
+
+@keyframes md-spinner-dash {
+	0% {
+		stroke-dashoffset: var(--spinner-offset);
+	}
+
+	50% {
+		stroke-dashoffset: calc(var(--spinner-offset)/4);
+		transform: rotate(135deg);
+	}
+
+	100% {
+		stroke-dashoffset: var(--spinner-offset);
+		transform: rotate(450deg);
 	}
 }

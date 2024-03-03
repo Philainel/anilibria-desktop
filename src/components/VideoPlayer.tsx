@@ -7,6 +7,7 @@ import { useRouter } from "@tanstack/react-router";
 import { MDIcon } from "./MDIcon";
 import { useAppSelector } from "../store";
 import { getEpisodeProgress } from "../store/slice/watchProgress";
+import { MDSpinner } from "./MDSpinner";
 
 export function VideoPlayer({ title, episode: defaultEpisode = 1, className, backArrow: enableBackArrow, initialProgress = 0, progressCallback = (progress) => { } }: { title: TitleT, episode?: number, className?: string, backArrow?: boolean, progressCallback?: (progress: number) => void, initialProgress?: number }) {
     const { history } = useRouter()
@@ -21,6 +22,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
         setProgress(progress)
     }
     const [isFullscreen, setFullscreen] = useState(false)
+    const [isBuffering, setBuffering] = useState(false)
     const toggleFullscreen = () => {
         if (isFullscreen) {
             document.exitFullscreen()
@@ -36,7 +38,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
     }, [])
     return <div className={className || "w-fit"} ref={containerRef}>
         <div className="relative bg-black w-[inherit] h-[inherit]"> {/* black bg for better vis */}
-            <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={true} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({ played }) => { setProgress(played); progressCallback(played) }} onDuration={() => seek(initialProgress)} />
+            <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={true} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({ played }) => { setProgress(played); progressCallback(played) }} onDuration={() => seek(initialProgress)} onBuffer={() => setBuffering(true)} onBufferEnd={() => setBuffering(false)} />
             <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col opacity-0 transition-all delay-[1s] duration-200 hover:opacity-100 hover:delay-0">
                 {/* overlay itself */}
                 <div className="bg-gradient-to-b from-black to-transparent text-white p-4 h-16 group flex gap-1 items-center">
@@ -45,7 +47,8 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
                     </button>}
                     <p>{title.names.ru}</p>
                 </div>
-                <div className="flex-grow-[1]" onClick={() => setPlaying(!isPlaying)}>{/* Pause Icon and stuff! */}</div>
+                <div className="flex-grow-[1] flex justify-center items-center" onClick={() => setPlaying(!isPlaying)}>
+                </div>
                 <div className="bg-gradient-to-b from-transparent to-black text-white flex flex-col items-center h-fit justify-end">
                     <div className="px-2 w-full">
                         <Slider.Root className="h-3 px-2 w-full rounded-full relative flex items-center group cursor-pointer" max={1000} value={[progress * 1000]} onValueChange={value => seek(value[0] / 1000)}>
@@ -69,6 +72,11 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
                             <MDIcon>{isFullscreen ? 'fullscreen_exit' : 'fullscreen'}</MDIcon>
                         </button>
                     </div>
+                </div>
+            </div>
+            <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col pointer-events-none">
+                <div className="flex-grow-[1] flex justify-center items-center">
+                    {isBuffering && <div className="bg-black bg-opacity-25 p-4 rounded-lg"><MDSpinner /></div>}
                 </div>
             </div>
         </div>

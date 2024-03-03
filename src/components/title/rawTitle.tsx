@@ -5,12 +5,12 @@ import { useState } from "react";
 import { useAppSelector } from "../../store";
 import { getEpisodeProgress, getTitleProgress } from "../../store/slice/watchProgress";
 
-export function RawTitleData({ title, short=false, allowExpanding }: { title: TitleT; short?: boolean; allowExpanding?: boolean | undefined; }) {
+export function RawTitleData({ title, short=false, allowExpanding, key }: { title: TitleT; short?: boolean; allowExpanding?: boolean | undefined; key?: any }) {
 	const lastEp = useAppSelector(getTitleProgress(title.code));
 	const episode = lastEp == -1 ? undefined : lastEp == title.player?.episodes?.last ? "last" : lastEp;
 	const epProgress = useAppSelector(getEpisodeProgress(title.code, lastEp));
 	const [expanded, setExpanded] = useState(false);
-	return <section className='flex items-center'>
+	return <section className='flex items-center' key={key}>
 		<img className='block bg-brand-light text-brand-dark aspect-[2/3] rounded-md h-fit' width={short ? 210 : 256} height={short ? 240 : 384} src={`https://wwnd.anilib.moe${title.posters.medium.url}`} />
 		<div className='bg-transparent text-brand-light p-8 flex flex-col gap-6 justify-stretch w-full'>
 			<Link to="/title/$code" params={{ code: title.code }}><h2 className='text-3xl font-bold'>{title.names.ru}</h2></Link>
