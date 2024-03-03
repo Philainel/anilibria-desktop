@@ -22,7 +22,7 @@ export const notificationsSlice = createSlice({
     initialState,
     reducers: {
         pushNewRelease(state, action: PayloadAction<string>) {
-            state.notifications = [{ type: "new_release", notification_id: (Math.random() * 10000).toString(16), title_code: action.payload }]
+            state.notifications = [{ type: "new_release", notification_id: (Math.random() * 10000).toString(16), title_code: action.payload }, ...state.notifications]
             state.notifications.length = Math.min(state.notifications.length, 5)
         }
     },

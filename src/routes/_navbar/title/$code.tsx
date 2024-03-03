@@ -8,7 +8,7 @@ import TitleFallback from '../../../components/title/fallback'
 export function TitleInformation() {
     const title: TitleT = Route.useLoaderData()
     return <main className='flex flex-col gap-4'>
-        <Title suspendQuery={() => title} key={title.code} allowExpanding />
+        <Title suspendQuery={() => title} allowExpanding />
         <h3 className="my-4 text-2xl">Список эпизодов</h3>
         <ul className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {title.player.list.map(it => <li key={it.uuid} className='text-brand-primary bg-brand-semidark rounded-md'>

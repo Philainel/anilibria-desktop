@@ -7,7 +7,7 @@ import { VideoPlayer, VideoPlayerProps } from "./VideoPlayer";
  */
 export function SuspensedVideoPlayer({ title, ...props }: Omit<VideoPlayerProps, 'title'> & {title: Promise<TitleT>}) {
     const r = useSuspenseQuery({
-        queryKey: ['suspended-video-player'],
+        queryKey: ['video', title],
         queryFn: () => title
     })
     return <VideoPlayer title={r.data} {...props}/>

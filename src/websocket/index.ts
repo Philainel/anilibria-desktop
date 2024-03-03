@@ -1,6 +1,5 @@
 import { TitleT } from "../api/anilibria-types"
 import { playerListT, playerT } from "../api/anilibria-types/TitleT"
-import { TypedEventTarget } from "../util/events"
 
 export type WSTitleUpdate = {
     type: "title_update",
@@ -22,31 +21,56 @@ export type WSPlaylistUpdate = {
     }
 }
 
-export type WSUpdate = WSTitleUpdate | WSPlaylistUpdate
+export type WSEncodingFinished = {
+    type: "encode_finish"
+    data: { id: string, episode: string }
+}
+
+export type WSUpdate = WSTitleUpdate | WSPlaylistUpdate | WSEncodingFinished
 
 function isWSUpdate(json: any): json is WSUpdate {
     return json["type"] != undefined
 }
 
-export class AnilibriaWS extends (EventTarget as TypedEventTarget<{
-    "playlist_update": CustomEvent<WSPlaylistUpdate>
-}>) {
+interface AnilibriaWSEventMap {
+    'playlist_update': WSPlaylistUpdate
+    'encode_finish': WSEncodingFinished
+}
+
+export class AnilibriaWS {
     private ws: WebSocket
+    private eventSubscribers: { [k in keyof AnilibriaWSEventMap]: ((d: AnilibriaWSEventMap[k]) => void)[] } = { 'playlist_update': [], 'encode_finish': [] }
     constructor(public url: string) {
-        super()
         this.ws = new WebSocket(url)
-        this.ws.addEventListener('message', this.onMessage)
+        this.ws.addEventListener('message', (e) => this.onMessage(e))
     }
-    onMessage(this: WebSocket, ev: MessageEvent) {
+    onMessage(ev: MessageEvent) {
+        console.log(ev)
         const json = JSON.parse(ev.data)
+        console.log(json)
         if (isWSUpdate(json)) {
             switch (json.type) {
                 case "playlist_update":
                     {
-                        this.dispatchEvent(new CustomEvent("playlist_update", { detail: json as WSPlaylistUpdate }))
+                        console.log("owo playlist update, dispatching crew")
+                        this.dispatch("playlist_update", json)
+                        break
+                    }
+                case "encode_finish":
+                    {
+                        this.dispatch("encode_finish", json)
                         break
                     }
             }
         }
+    }
+    subscribe<T extends keyof AnilibriaWSEventMap>(ev_type: T, handle: (d: AnilibriaWSEventMap[T]) => void) {
+        this.eventSubscribers[ev_type].push(handle)
+    }
+    unsubscribe<T extends keyof AnilibriaWSEventMap>(ev_type: T, handle: (d: AnilibriaWSEventMap[T]) => void) {
+        this.eventSubscribers[ev_type].splice(this.eventSubscribers[ev_type].indexOf(handle))
+    }
+    dispatch<T extends keyof AnilibriaWSEventMap>(ev_type: T, d: AnilibriaWSEventMap[T]) {
+        this.eventSubscribers[ev_type].forEach(it => it(d))
     }
 }

@@ -4,8 +4,8 @@ import { Link } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { Img } from "react-suspense-img";
 
-export function ShelfData({ name, children: queryFn, key = name }: { name: string, children: () => TitlesT | Promise<TitlesT>, key?: string }) {
-    const query = useSuspenseQuery({ queryKey: ["shelf-" + key], queryFn })
+export function ShelfData({ name, children: queryFn }: { name: string, children: () => TitlesT | Promise<TitlesT> }) {
+    const query = useSuspenseQuery({ queryKey: ['shelf', name], queryFn })
     const titles = query.data
     return <section className='flex flex-col'>
         <h2 className='text-3xl my-4'>{name}</h2>

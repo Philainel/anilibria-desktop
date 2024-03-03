@@ -6,12 +6,12 @@ import { useAppSelector } from "../../store";
 import { getEpisodeProgress, getTitleProgress } from "../../store/slice/watchProgress";
 import { Img } from "react-suspense-img";
 
-export function RawTitleData({ title, short = false, allowExpanding, key }: { title: TitleT; short?: boolean; allowExpanding?: boolean | undefined; key?: any }) {
+export function RawTitleData({ title, short = false, allowExpanding }: { title: TitleT; short?: boolean; allowExpanding?: boolean | undefined; }) {
 	const lastEp = useAppSelector(getTitleProgress(title.code));
 	const episode = lastEp == -1 ? undefined : lastEp == title.player?.episodes?.last ? "last" : lastEp;
 	const epProgress = useAppSelector(getEpisodeProgress(title.code, lastEp));
 	const [expanded, setExpanded] = useState(false);
-	return <section className='flex items-center' key={key}>
+	return <section className='flex items-center'>
 		<Suspense fallback={<div className='block bg-brand-semidark aspect-[2/3] rounded-md h-fit animate-pulse' style={{ width: short ? 210 : 256, height: short ? 240 : 384 }} />}>
 			<Img className='block text-brand-dark aspect-[2/3] rounded-md h-fit' width={short ? 210 : 256} height={short ? 240 : 384} src={`https://wwnd.anilib.moe${title.posters.medium.url}`} />
 		</Suspense>

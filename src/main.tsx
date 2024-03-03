@@ -13,10 +13,11 @@ import getTitle from "./api/getTitle";
 
 const queryClient = new QueryClient()
 // console.log(import.meta.env.WS)
-const anilibriaWS = new AnilibriaWS(/* import.meta.env.WS == "LOCAL" ? */ "ws://localhost:1800" /* : "wss://api.anilibria.tv/v3/ws" */)
+const anilibriaWS = new AnilibriaWS(/* import.meta.env.WS == "LOCAL" ? */ /* "ws://localhost:1800" */ /* : */ "wss://api.anilibria.tv/v3/ws")
 
-anilibriaWS.addEventListener("playlist_update", (e) => {
-	getTitle({ filter: "code", id: e.detail.data.id }).then(({ code }) => store.dispatch(pushNewRelease(code)))
+anilibriaWS.subscribe("encode_finish", (e) => {
+	console.log("owo encoding done!")
+	getTitle({ filter: "code", id: +e.data.id }).then(({ code }) => { console.log(code); store.dispatch(pushNewRelease(code)) })
 })
 
 setInterval(() => saveState(), 3000)

@@ -6,7 +6,7 @@ export function Search() {
     const { query } = Route.useSearch()
     return <>
         <main className='flex flex-col gap-4'>
-            <TitleList suspendQuery={async () => {let a = (await apiSearch({ search: query })); /*console.log(a);*/ return a.list}} key={'search-results-'+query} />
+            <TitleList key={query} suspendQuery={async () => {let a = (await apiSearch({ search: query })); /*console.log(a);*/ return a.list}} />
         </main>
     </>
 }

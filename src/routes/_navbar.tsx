@@ -2,8 +2,12 @@ import { Link, Outlet, createFileRoute, useNavigate, useRouterState } from "@tan
 import { MDIcon } from "../components/MDIcon";
 import L from "../components/ActivatedLink";
 import * as Popover from '@radix-ui/react-popover'
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import ActiveWrapper from "../components/ActiveWrapper";
+import { useAppSelector } from "../store";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { TitleT } from "../api/anilibria-types";
+import getTitle from "../api/getTitle";
 
 export const Route = createFileRoute("/_navbar")({
     component: NavbarLayout
@@ -40,20 +44,7 @@ export function NavbarLayout({ notFound }: { notFound?: boolean }) {
                         <Popover.Content align="end" asChild sideOffset={16}>
                             <div className="rounded-md bg-brand-light text-brand-dark w-[24rem] p-4">
                                 <p className="text-xl">Уведомления</p>
-                                <div className="flex flex-col">
-                                    <div className="bg-slate-500 bg-opacity-25 rounded-md p-2 flex gap-2">
-                                        <img src="https://placehold.co/200x300.png" width={64} height={96} alt="" />
-                                        <div className="grow flex flex-col">
-                                            <p className="text-lg">Вышла новая серия!</p>
-                                            <p>Tensei Slime</p>
-                                            <div className="flex gap-2 mt-auto">
-                                                <button className="p-1 rounded-md bg-brand-primary text-brand-light w-9 h-9 flex justify-center items-center"><MDIcon>play_arrow</MDIcon></button>
-                                                <button className="p-1 rounded-md bg-brand-light text-brand-dark w-9 h-9 flex justify-center items-center"><MDIcon>schedule</MDIcon></button>
-                                            </div>
-                                        </div>
-                                        <button className="w-8 flex justify-center items-center"><MDIcon>close</MDIcon></button>
-                                    </div>
-                                </div>
+                                {SuspenseNotificationContent()}
                             </div>
                         </Popover.Content>
                     </Popover.Portal>
@@ -65,5 +56,36 @@ export function NavbarLayout({ notFound }: { notFound?: boolean }) {
             Страница {pathname} не найдена! Сообщите разработчикам о неполадке.
         </main>}
         <Outlet />
+    </div>
+}
+
+function SuspenseNotificationContent() {
+    const notifs = useAppSelector(state => state.notifications.notifications)
+    return <div className="flex flex-col gap-4">
+        {notifs.length < 1 && <p>Уведомлений нет.</p>}
+        {notifs.map(it => {
+            switch (it.type) {
+                case "new_release":
+                    {
+                        return <Suspense fallback={it.title_code} key={it.title_code+it.notification_id}><NewReleaseNotif>{it.title_code}</NewReleaseNotif></Suspense>
+                    }
+            }
+        })}
+    </div>;
+}
+
+function NewReleaseNotif({ children: code }: { children: string }) {
+    const { data: title } = useSuspenseQuery({ queryKey: ['new-release',code], queryFn: () => getTitle({code}) })
+    return <div className="bg-slate-500 bg-opacity-25 rounded-md p-2 flex gap-2">
+        <img src={"https://wwnd.anilib.moe"+title.posters.medium.url} width={64} height={96} alt="" />
+        <div className="grow flex flex-col">
+            <p className="text-lg">Вышла новая серия!</p>
+            <p className="truncate">{title.names.ru}</p>
+            <div className="flex gap-2 mt-auto">
+                <Link to="/player/$code/$episode" params={{ code: title.code, episode: title.player.episodes.last + "" }} className="p-1 rounded-md bg-brand-primary text-brand-light w-9 h-9 flex justify-center items-center"><MDIcon>play_arrow</MDIcon></Link>
+                <button className="p-1 rounded-md bg-brand-light text-brand-dark w-9 h-9 flex justify-center items-center"><MDIcon>schedule</MDIcon></button>
+            </div>
+        </div>
+        <button className="w-8 flex justify-center items-center"><MDIcon>close</MDIcon></button>
     </div>
 }
