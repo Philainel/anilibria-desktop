@@ -16,7 +16,7 @@ export function NavbarLayout({ notFound }: { notFound?: boolean }) {
     return <>
         <header>
             <nav className='flex gap-4 p-4 items-center'>
-                <img src="https://placehold.co/128x128.png" width={32} className='rounded-full' />
+                <img src="/favicon.svg" width={32} className='rounded-full' />
                 <L path="/">Релизы</L>
                 <L path="/catalog">Каталог</L>
                 <L path="/favorite">Избранное</L>

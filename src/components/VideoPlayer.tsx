@@ -13,7 +13,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
     const { history } = useRouter()
     const containerRef = useRef<HTMLDivElement>(null)
     const playerRef = useRef<ReactPlayer>(null)
-    const [isPlaying, setPlaying] = useState(false)
+    const [isPlaying, setPlaying] = useState(true)
     const [episode, setEpisode] = useState(defaultEpisode - 1)
     const [progress, setProgress] = useState(0)
     const seek = (progress: number) => {
