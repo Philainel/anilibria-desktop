@@ -35,6 +35,7 @@ export const { completeEp, saveEp } = watchProgressSlice.actions
 
 // export const selectCount = (state: RootState) => state.counter.value
 export const getEpisodeProgress = (code: string, ep: number) => (state: RootState) => state.watchProgress.value[code]?.progress[ep] ?? 0
-export const getTitleProgress = (code: string) => (state: RootState) => state.watchProgress.value[code]?.lastEp
+export const getTitleProgress = (code: string) => (state: RootState) => state.watchProgress.value[code]?.lastEp ?? -1
+export const getUnfinished = (state: RootState) => Object.entries(state.watchProgress.value).filter(([, it]) => it.progress[it.lastEp] > 0)
 
 export default watchProgressSlice.reducer

@@ -16,12 +16,10 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
     const [episode, setEpisode] = useState(defaultEpisode - 1)
     const [progress, setProgress] = useState(0)
     const seek = (progress: number) => {
+        console.log("Seeking to "+progress)
         playerRef.current?.seekTo(progress, "fraction")
         setProgress(progress)
     }
-    useEffect(() => {
-        seek(initialProgress)
-    }, [])
     const [isFullscreen, setFullscreen] = useState(false)
     const toggleFullscreen = () => {
         if (isFullscreen) {
@@ -38,7 +36,7 @@ export function VideoPlayer({ title, episode: defaultEpisode = 1, className, bac
     }, [])
     return <div className={className || "w-fit"} ref={containerRef}>
         <div className="relative bg-black w-[inherit] h-[inherit]"> {/* black bg for better vis */}
-            <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={true} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({ played }) => { setProgress(played); progressCallback(played) }} />
+            <ReactPlayer ref={playerRef} height={"100%"} width={"100%"} autoPlay={true} controls={false} playing={isPlaying} url={getTitleHLS(title, title.player.list[episode], "hd")} onProgress={({ played }) => { setProgress(played); progressCallback(played) }} onDuration={() => seek(initialProgress)} />
             <div className="absolute top-0 left-0 w-full h-full z-[1] flex flex-col opacity-0 transition-all delay-[1s] duration-200 hover:opacity-100 hover:delay-0">
                 {/* overlay itself */}
                 <div className="bg-gradient-to-b from-black to-transparent text-white p-4 h-16 group flex gap-1 items-center">

@@ -1,9 +1,16 @@
 import { Link, createFileRoute } from '@tanstack/react-router';
 import Title from '../../components/title';
 import getUpdatedTitles from '../../api/getUpdatedTitles';
+import { TitleT, TitlesT } from '../../api/anilibria-types';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { useAppSelector } from '../../store';
+import { getUnfinished } from '../../store/slice/watchProgress';
+import getTitle from '../../api/getTitle';
+import Shelf from '../../components/shelf';
 
 // kraska was here owo :3
 export function App() {
+    const unfinishedTitles = useAppSelector(getUnfinished)
     return <>
         <main className='p-8 flex flex-col gap-4'>
             <Title suspendQuery={async () => {
@@ -12,27 +19,7 @@ export function App() {
                     throw new Error('could not find suitable title withing 10 recent releases!')
                 return recentTitles[Math.floor(Math.random() * recentTitles.length)]
             }} />
-            <section className='flex-shrink flex flex-col'>
-                <h2 className='text-3xl my-4'>Продолжить просмотр</h2>
-                <div className="flex gap-4 overflow-x-auto">
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                </div>
-            </section>
-            <section className='shrink flex flex-col'>
-                <h2 className='text-3xl my-4'>Ожидается сегодня</h2>
-                <div className="flex gap-4 overflow-x-auto">
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                    <img className='bg-brand-light text-brand-dark aspect-[2/3] rounded-3xl' src="https://placehold.co/256x384.png?text=Poster" />
-                </div>
-            </section>
+            <Shelf name='Продолжить просмотр'>{() => Promise.all(unfinishedTitles.map(it => getTitle({ code: it[0] })))}</Shelf>
             <Link to='/player/$code/$episode' params={{ code: "tensei-shitara-slime-datta-ken", episode: "1" }}>Tensura debug link</Link>
         </main>
     </>
