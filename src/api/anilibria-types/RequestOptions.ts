@@ -110,7 +110,7 @@ export type TitleSearchAdvancedRequestOptionsT = {
   remove?: string;
   include?: string;
   description_type?: string;
-  playlist_type?: number;
+  playlist_type?: string;
   limit?: number;
   after?: number;
   order_by?: string;

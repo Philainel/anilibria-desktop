@@ -25,6 +25,7 @@ export type TitleT = {
   blocked: blockedT;
   player: playerT;
   torrents: torrentsT;
+  in_favorites: number
 };
 
 export type namesT = {

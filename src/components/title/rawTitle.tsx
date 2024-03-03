@@ -45,6 +45,9 @@ export function RawTitleData({ title, short = false, allowExpanding, key }: { ti
 					<div>
 						<span className="font-bold">Работа над субтитрами: </span>{[...title.team.translator, ...title.team.editing, ...title.team.decor].map((v, k) => <span>{v}{title.team.translator.length + title.team.editing.length + title.team.decor.length - k == 1 ? "" : ", "}</span>)}
 					</div>
+					<div>
+						<span className="font-bold">Избранное: </span><span>{title.in_favorites}</span>
+					</div>
 				</div>}
 			</div>
 			<div>

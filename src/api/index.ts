@@ -27,7 +27,7 @@ export async function ripplingRequest<T, D, R>(c: AxiosRequestConfig<T>): Promis
     throw Error('Failed to request - all mirrors are down?')
 }
 
-export function generateAPI<T extends Record<string, any>, R extends Record<string, any>>(route: string, overrideReq?: T, overrideOpts?: AxiosRequestConfig): (request: T, opts?: AxiosRequestConfig) => Promise<R> {
+export function generateAPI<T extends Record<string, any>, R extends Record<string, any>>(route: string, overrideReq?: Partial<T>, overrideOpts?: AxiosRequestConfig): (request: T, opts?: AxiosRequestConfig) => Promise<R> {
     return async (request, opts) => JSON.parse((await ripplingRequest({ ...opts, ...overrideOpts, url: route + "?" + new URLSearchParams({ ...request, ...overrideReq }).toString() })).data as string);
 }
 
